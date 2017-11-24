@@ -9,13 +9,16 @@ namespace Exercise_4
         static List<string> FilterFile(string root, Predicate<string> predicate)
         {
             var files = new List<string>();
-            
             foreach (var file in Directory.GetFiles(root))
             {
                 if (predicate(file))
                 {
                     files.Add(file);
                 }
+            }
+            foreach (var directory in Directory.GetDirectories(root))
+            {
+                files.AddRange(FilterFile(directory, predicate));
             }
             return files;
         }
